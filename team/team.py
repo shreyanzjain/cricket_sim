@@ -16,7 +16,6 @@ class Team(ITeam):
         pass
 
     def select_captain(self):
-        self.captian = self.players[0]
         for player in self.players:
             if player.experience > self.captian.experience:
                 self.captian = player
@@ -25,7 +24,6 @@ class Team(ITeam):
 
     def send_player(self):
         pass
-
 
     def choose_bowler():
         pass
