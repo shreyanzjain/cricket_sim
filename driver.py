@@ -38,21 +38,24 @@ batsman = team1.players[0]
 index = 1
 
 bowler = team2.players[0]
+index_b = 0
 
-while(remaining_balls > 0):
+while(remaining_balls >= 0):
     batting_chc = np.random.choice(BATTING_CHOICES, p=BATTING_PROBABILITIES)
     bowling_chc = np.random.choice(BOWLING_CHOICES, p=BOWLING_PROBABILITIES)
 
-    print(batting_chc, bowling_chc)
+    # print(batting_chc, bowling_chc)
     if batting_chc == 5:
-        print(f"{batsman.name} is out")
+        print(f"[TEAM 1] {batsman.name} is out, current_score = {score}")
         batsman.is_out = True
         team1.players[index - 1] = batsman
-        batsman = team1.players[index]
-        
+        index += 1
+
         # to check if all players have been taken out
-        if index + 1 < len(team1.players):
-            index += 1
+        if index < len(team1.players):
+            batsman = team1.players[index]
+            print(f"[TEAM 1] {batsman.name} is sent in to bat")
+
         else:
             print("All players have been taken out.")
             print(f"Total score by {team1.team_name} = {score}, remaining balls = {remaining_balls}")
@@ -64,3 +67,24 @@ while(remaining_balls > 0):
         remaining_balls += 1 # so that our ball is not counted
 
     remaining_balls -= 1
+
+    if(remaining_balls % 6 == 0):
+        print(f"[TEAM 2] {bowler.name} is being swapped")
+
+        # store bowler data
+        team2.players[index_b] = bowler
+
+        # swap bowler for the next bowler
+        index_b += 1
+        index_b = index_b % 10
+        bowler = team2.players[index_b]
+        print(f"[TEAM 2] {bowler.name} will be bowling")
+
+target = score
+total_balls = num_overs * 6
+remaining_balls = total_balls
+score = 0
+
+batsman = team2.players[0]
+index = 1
+bowler = team1.players[0]
