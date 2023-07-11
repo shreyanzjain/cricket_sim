@@ -80,6 +80,11 @@ while(remaining_balls >= 0):
         bowler = team2.players[index_b]
         print(f"[TEAM 2] {bowler.name} will be bowling")
 
+# when not all batsmen are taken out
+if(remaining_balls == -1):
+    print(f"Remaining wickets: {10 - index + 1}")
+    print(f"Total score by {team1.team_name} = {score}, remaining balls = {remaining_balls + 1}")
+
 target = score
 total_balls = num_overs * 6
 remaining_balls = total_balls
