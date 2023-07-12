@@ -1,27 +1,10 @@
 from team.team_generator import TeamGenerator
 import numpy as np
+from outcome import probabilities
+from globals import BATTING_CHOICES, BOWLING_CHOICES, batting_schema, bowling_schema
 
-BATTING_CHOICES = [1, 2, 3, 4, 5, 6]
 BATTING_PROBABILITIES = [0.55, 0.1, 0.1, 0.1, 0.1, 0.05]
-
-BOWLING_CHOICES = [1, 2, 3, 4]
 BOWLING_PROBABILITIES = [0.75, 0.1, 0.1, 0.05]
-
-batting_schema = {
-        1: 1, #one
-        2: 2, #two
-        3: 3, #three
-        4: 4, #four
-        5: 0, #out
-        6: 6 #six
-    }
-
-bowling_schema = {
-    1: 0, #ball
-    2: 1, #wide
-    3: 1, #no_ball
-    4: 0, #bouncer
-}
 
 team1_generator = TeamGenerator("Sunrisers", "players.csv")
 team1 = team1_generator.generate_teams()
@@ -35,14 +18,18 @@ total_balls = num_overs * 6
 remaining_balls = total_balls
 
 batsman = team1.players[0]
+print(batsman.batting_criteria)
 index = 1
 
 bowler = team2.players[0]
 index_b = 0
 
 while(remaining_balls >= 0):
-    batting_chc = np.random.choice(BATTING_CHOICES, p=BATTING_PROBABILITIES)
-    bowling_chc = np.random.choice(BOWLING_CHOICES, p=BOWLING_PROBABILITIES)
+    batting_chc = np.random.choice(BATTING_CHOICES,
+                    p=probabilities.batsman_prob(batsman.batting_criteria))
+    
+    bowling_chc = np.random.choice(BOWLING_CHOICES, 
+                    p=probabilities.bowler_prob(bowler.bowling_criteria))
 
     # print(batting_chc, bowling_chc)
     if batting_chc == 5:
