@@ -2,7 +2,7 @@ from player import Player
 from typing import List
 import numpy as np
 
-def batsman_prob(player: Player) -> List[float]:
+def batsman_prob(batting_criteria: float) -> List[float]:
     probabilities = []
     sum_total = 0
     prob_total = 0
@@ -22,12 +22,12 @@ def batsman_prob(player: Player) -> List[float]:
         # refer to batsman_schema in globals.py in the parent directory
         if(i < 3 or i == 5):
             probabilities[i] = round(
-                (player.batting_criteria * probabilities[i]) / sum_total, 2)
+                (batting_criteria * probabilities[i]) / sum_total, 2)
         # getting out is based on 1 - batting criteria (i.e. it's compliment)
         # index 4 refers to out
         else:
             probabilities[i] = round(
-                ((1 - player.batting_criteria) * probabilities[i]) / sum_total, 2)
+                ((1 - batting_criteria) * probabilities[i]) / sum_total, 2)
         
         if(probabilities[i] != 0 and probabilities[i] < smallest_probability):
             smallest_probability_index = i
@@ -39,5 +39,4 @@ def batsman_prob(player: Player) -> List[float]:
         probabilities[smallest_probability_index] += diff_in_probability
         probabilities[smallest_probability_index] = round(probabilities[smallest_probability_index], 2)
 
-    print(probabilities, sum(probabilities))
     return probabilities
