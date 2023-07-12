@@ -14,5 +14,5 @@ class Player:
         self.overs_bowled = overs_bowled
         self.is_out = is_out
 
-        self.batting_criteria = (self.batting + self.running + self.experience) / 3
-        self.bowling_criteria = (self.bowling + self.experience) / 2
+        self.batting_criteria = round((self.batting + self.running + self.experience) / 3, 2)
+        self.bowling_criteria = round((self.bowling + self.experience) / 2, 2)
